@@ -14,3 +14,6 @@
 - [Roadmap · Streamlit](https://roadmap.streamlit.app/)
 - [streamlit-extras · Streamlit](https://extras.streamlit.app/)
 - [Streamlit cheat sheet · Streamlit](https://cheat-sheet.streamlit.app/)
+
+# credits
+- https://github.com/andrejewski/himalaya/
