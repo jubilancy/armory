@@ -6,11 +6,27 @@
 # ///
 
 import streamlit as st
-import himalaya
 import json
+
+# Safe import for Streamlit Cloud environments
+try:
+    import himalaya
+    HIMALAYA_AVAILABLE = True
+except ImportError:
+    HIMALAYA_AVAILABLE = False
 
 def run_himalaya_tool():
     st.title("📂 Himalaya: HTML to JSON")
+    
+    if not HIMALAYA_AVAILABLE:
+        st.error("### 🛠️ Library Missing")
+        st.warning("""
+        **Action Required:** Streamlit Cloud cannot find the `himalaya` library. 
+        Please add `himalaya` to your `requirements.txt` file in the root of your repository.
+        """)
+        st.info("Once you update `requirements.txt` and push to GitHub, Streamlit will rebuild and this tool will work.")
+        return
+
     st.markdown("""
     Convert raw HTML into a structured JSON format instantly. 
     This tool uses the [Himalaya](https://github.com/andrejewski/himalaya) parser.
@@ -27,7 +43,7 @@ def run_himalaya_tool():
 
     with col1:
         # 2. Trigger: Button to start conversion
-        convert_pressed = st.button("Convert to JSON", use_container_width=True)
+        convert_pressed = st.button("Convert to JSON", use_container_width=True, type="primary")
 
     if convert_pressed:
         if not html_input.strip():
@@ -35,7 +51,6 @@ def run_himalaya_tool():
         else:
             try:
                 # Processing logic using himalaya
-                # Note: himalaya.parse returns a list/dict structure
                 json_data = himalaya.parse(html_input)
                 json_string = json.dumps(json_data, indent=2)
 
